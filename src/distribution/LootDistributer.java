@@ -18,8 +18,10 @@ public class LootDistributer {
     }
 
     public void printLootBags() {
+        int i = 1;
         for(Pair<String, LootBag> playerLoot : playerLoots){
-            System.out.println("Spieler: " + playerLoot.getKey() + " LootBag: " + playerLoot.getValue());
+            System.out.println("Spieler" + i +": " + playerLoot.getKey() + " LootBag: " + playerLoot.getValue());
+            ++i;
         }
     }
 
