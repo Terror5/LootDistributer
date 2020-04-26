@@ -34,11 +34,13 @@ public class Main extends Application {
         w.parse();
 
         LootDistributer lootDistributer = new LootDistributer();
-        lootDistributer.addLoot(new Loot(LootType.ARCANE_CRISTALL, new BigDecimal(90.0), 1));
-        lootDistributer.addLoot(new Loot(LootType.BLOODVINE, new BigDecimal(25.0), 5));
-        lootDistributer.addLoot(new Loot(LootType.COIN, new BigDecimal(1.0), 45));
-        lootDistributer.addLoot(new Loot(LootType.JEWEL, new BigDecimal(9.0), 33));
-        lootDistributer.addLoot(new Loot(LootType.SHARD, new BigDecimal(4.0), 5));
+        //lootDistributer.addLoot(new Loot(LootType.ARCANE_CRISTALL, new BigDecimal(78.7), 1));
+        lootDistributer.addLoot(new Loot(LootType.BLOODVINE, new BigDecimal(30.69), 2));
+        lootDistributer.addLoot(new Loot(LootType.COIN, new BigDecimal(0.94), 98));
+        lootDistributer.addLoot(new Loot(LootType.JEWEL, new BigDecimal(7.99), 54));
+        lootDistributer.addLoot(new Loot(LootType.SHARD, new BigDecimal(3.3), 10));
+        //lootDistributer.addLoot(new Loot(LootType.ETERNAL_ESSENCE, new BigDecimal(6.99), 5));
+        lootDistributer.addLoot(new Loot(LootType.ILLUSIONDUST, new BigDecimal( 0.25), 21));
 
         lootDistributer.distribute();
         lootDistributer.printLootBags();

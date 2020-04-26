@@ -82,6 +82,8 @@ public class LootDistributer {
                     }
 
                     // if none is found - find all players with lowest lootbag value and randomly assign it to one
+                    // NOT NECESSARY -> should terminate because it is possible to put items exceeding threshold
+                    //addLootToLowestBag(loot);
                 }
 
                 // increase playerindex so it cant exceed the array bounds set by the playerlist
