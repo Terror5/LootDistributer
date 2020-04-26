@@ -1,0 +1,43 @@
+package importer;
+
+import distribution.RaidMember;
+import org.jsoup.nodes.Document;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import javax.xml.parsers.SAXParser;
+
+public class WowLogsHtmlHandler {
+
+    private ClipboardImporter clipboardImporter = new ClipboardImporter();
+    private SAXParser saxParser;
+
+    public void parse(){
+        // Import Data from Clipboard
+        String htmlData = clipboardImporter.importData();
+
+        // parse xml data for <a> values -> containing the players name
+        Document doc = Jsoup.parse(htmlData);
+
+        Elements linkElements = doc.select("a");
+        for (Element element: linkElements) {
+            String text = element.text();
+            if(text != "" && !text.equals(null)) {
+                RaidMember.addPlayer(text);
+            }
+        }
+    }
+
+
+    // Data to parse
+    /*
+    <table cellspacing="0" class="composition-table" style="">
+	<tbody>
+		<tr class="composition-row"><td class="composition-label">Tanks:</td><td style="width:100%"><span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Druid-Guardian"><a href="#" class="Druid" onclick="return followRawLogLinkForActor(this, 'summary',0,1,13,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,13,0,0)">Tanitha</a></span> <span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Warrior-Protection"><a href="#" class="Warrior" onclick="return followRawLogLinkForActor(this, 'summary',0,1,14,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,14,0,0)">Baalzi</a></span>
+		</td></tr><tr class="composition-row" style="background:#101010; "><td class="composition-label">DPS:</td><td style="width:100%"><span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Hunter-Marksmanship"><a href="#" class="Hunter" onclick="return followRawLogLinkForActor(this, 'summary',0,1,1,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,1,0,0)">Fhaylien</a></span> <span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Hunter-Marksmanship"><a href="#" class="Hunter" onclick="return followRawLogLinkForActor(this, 'summary',0,1,8,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,8,0,0)">Soleya</a></span> <span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Mage-Frost"><a href="#" class="Mage" onclick="return followRawLogLinkForActor(this, 'summary',0,1,28,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,28,0,0)">Asassinteddy</a></span> <span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Mage-Frost"><a href="#" class="Mage" onclick="return followRawLogLinkForActor(this, 'summary',0,1,18,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,18,0,0)">Erdbeerbär</a></span> <span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Mage-Frost"><a href="#" class="Mage" onclick="return followRawLogLinkForActor(this, 'summary',0,1,22,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,22,0,0)">Krusell</a></span> <span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Mage-Frost"><a href="#" class="Mage" onclick="return followRawLogLinkForActor(this, 'summary',0,1,11,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,11,0,0)">Minifroster</a></span> <span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Priest-Shadow"><a href="#" class="Priest" onclick="return followRawLogLinkForActor(this, 'summary',0,1,19,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,19,0,0)">Hitti</a></span> <span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Rogue-Assassination"><a href="#" class="Rogue" onclick="return followRawLogLinkForActor(this, 'summary',0,1,9,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,9,0,0)">Angstschweiß</a></span> <span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Rogue-Assassination"><a href="#" class="Rogue" onclick="return followRawLogLinkForActor(this, 'summary',0,1,17,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,17,0,0)">Comudus</a></span> <span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Rogue-Assassination"><a href="#" class="Rogue" onclick="return followRawLogLinkForActor(this, 'summary',0,1,23,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,23,0,0)">Gunní</a></span> <span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Warlock-Destruction"><a href="#" class="Warlock" onclick="return followRawLogLinkForActor(this, 'summary',0,1,26,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,26,0,0)">Amlocko</a></span> <span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Warlock-Destruction"><a href="#" class="Warlock" onclick="return followRawLogLinkForActor(this, 'summary',0,1,21,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,21,0,0)">Gisso</a></span> <span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Warlock-Destruction"><a href="#" class="Warlock" onclick="return followRawLogLinkForActor(this, 'summary',0,1,16,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,16,0,0)">Shercan</a></span> <span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Warrior-Fury"><a href="#" class="Warrior" onclick="return followRawLogLinkForActor(this, 'summary',0,1,6,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,6,0,0)">Alpheus</a></span> <span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Warrior-Fury"><a href="#" class="Warrior" onclick="return followRawLogLinkForActor(this, 'summary',0,1,5,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,5,0,0)">Redic</a></span>
+		</td></tr><tr class="composition-row"><td class="composition-label">Healers:</td><td style="width:100%"><span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Paladin-Holy"><a href="#" class="Paladin" onclick="return followRawLogLinkForActor(this, 'summary',0,1,20,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,20,0,0)">Braterus</a></span> <span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Paladin-Holy"><a href="#" class="Paladin" onclick="return followRawLogLinkForActor(this, 'summary',0,1,15,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,15,0,0)">Moves</a></span> <span class="composition-entry"><img src="https://dmszsuqyoe6y6.cloudfront.net/img/warcraft/icons/actors.jpg?v=2" class="composition-icon sprite actor-sprite-Priest-Holy"><a href="#" class="Priest" onclick="return followRawLogLinkForActor(this, 'summary',0,1,12,0,0)" oncontextmenu="return followRawLogLinkForActor(this, 'summary',0,1,12,0,0)">Anyja</a></span>
+	</td></tr></tbody>
+    </table>
+     */
+}
